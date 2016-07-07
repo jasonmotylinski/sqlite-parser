@@ -206,7 +206,7 @@ expression_collate "COLLATE Expression"
 /** @note Removed expression on left-hand-side to remove recursion */
 expression_compare "Comparison Expression"
   = v:( expression_value ) o n:( expression_is_not )?
-    m:( LIKE / GLOB / REGEXP / MATCH ) o e:( expression ) o
+    m:( LIKE / GLOB / REGEXP / MATCH / CONTAINS ) o e:( expression ) o
     x:( expression_escape )?
   {
     return util.extend({
@@ -2286,7 +2286,7 @@ binary_lang_isnt "IS"
   { return util.keyify([i, n]); }
 
 binary_lang_misc
-  = m:( IN / LIKE / GLOB / MATCH / REGEXP )
+  = m:( IN / LIKE / GLOB / MATCH / REGEXP / CONTAINS )
   { return util.key(m); }
 
 /* Database, Table and Column IDs */
@@ -2625,6 +2625,8 @@ CONFLICT
   = "CONFLICT"i !name_char
 CONSTRAINT
   = "CONSTRAINT"i !name_char
+CONTAINS
+  = "CONTAINS"i !name_char
 CREATE
   = "CREATE"i !name_char
 CROSS
@@ -2834,7 +2836,7 @@ reserved_word_list
   = ABORT / ACTION / ADD / AFTER / ALL / ALTER / ANALYZE / AND / AS /
     ASC / ATTACH / AUTOINCREMENT / BEFORE / BEGIN / BETWEEN / BY /
     CASCADE / CASE / CAST / CHECK / COLLATE / COLUMN / COMMIT /
-    CONFLICT / CONSTRAINT / CREATE / CROSS / CURRENT_DATE /
+    CONFLICT / CONSTRAINT / CONTAINS / CREATE / CROSS / CURRENT_DATE /
     CURRENT_TIME / CURRENT_TIMESTAMP / DATABASE / DEFAULT /
     DEFERRABLE / DEFERRED / DELETE / DESC / DETACH / DISTINCT /
     DROP / EACH / ELSE / END / ESCAPE / EXCEPT / EXCLUSIVE / EXISTS /
